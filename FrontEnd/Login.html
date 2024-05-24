@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required /><br />
+            <input type="password" id="password" placeholder="Password" required /><br />
+            <button type="submit">Login</button>
+        </form>
+        <div id="errorMessage" style="color: red; display: none;"></div> <!-- Hata mesajı için div -->
+        <p>Hesabınız yok mu? <a href="Register.html">Kayıt Olun</a></p> <!-- Kayıt olma linki -->
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var errorMessageElement = document.getElementById("errorMessage"); // Hata mesajı div'i
+
+            axios.post("http://localhost:5209/api/Authentication/Login", {
+                UserName: username,
+                Password: password
+            })
+                .then((response) => {
+                    console.log("Token: ", response.data);
+                    localStorage.setItem("token", response.data); // Token localStorage'a kaydedilir
+                    window.location.href = "Anasayfa.html";
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    // Hata durumunda mesajı göster
+                    errorMessageElement.textContent = "Hatalı kullanıcı adı veya şifre!";
+                    errorMessageElement.style.display = "block"; // Div'i görünür yap
+                });
+        });
+
+        // localStorage'tan token kontrol edilir
+        var token = localStorage.getItem("token");
+    </script>
+</body>
+
+</html>

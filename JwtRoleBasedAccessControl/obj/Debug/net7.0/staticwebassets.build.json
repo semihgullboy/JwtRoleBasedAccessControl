@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "Jst6CBqkpHiwVIFRgPsBezTpHISaG5IiUP665gdd1RI=",
+  "Source": "JwtRoleBasedAccessControl",
+  "BasePath": "_content/JwtRoleBasedAccessControl",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

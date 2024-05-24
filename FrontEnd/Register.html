@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="username" placeholder="Username" required /><br />
+            <input type="password" id="password" placeholder="Password" required /><br />
+            <button type="submit">Register</button>
+        </form>
+        <div id="errorMessage" style="color: red; display: none;"></div> <!-- Hata mesajı için div -->
+        <p>Zaten bir hesabınız var mı? <a href="login.html">Giriş Yapın</a></p> <!-- Giriş yapma linki -->
+    </div>
+
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var errorMessageElement = document.getElementById("errorMessage"); // Hata mesajı div'i
+
+            axios.post("http://localhost:5209/api/Authentication/Register", {
+                UserName: username,
+                Password: password
+            })
+                .then((response) => {
+                    console.log("Token: ", response.data);
+                    window.location.href = "Login.html"; // Kayıt olduktan sonra login sayfasına yönlendir
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    // Hata durumunda mesajı göster
+                    errorMessageElement.textContent = error.response.data;
+                    errorMessageElement.style.display = "block"; // Div'i görünür yap
+                });
+        });
+    </script>
+</body>
+
+</html>
